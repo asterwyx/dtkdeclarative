@@ -130,6 +130,8 @@ class DQMLGlobalObject : public QObject, public DTK_CORE_NAMESPACE::DObject
 #else
     Q_PROPERTY(QQuickPalette* palette READ quickPalette NOTIFY paletteChanged)
     Q_PROPERTY(QQuickPalette* inactivePalette READ inactiveQuickPalette NOTIFY inactivePaletteChanged)
+    Q_PROPERTY(QQuickPalette* darkPalette READ darkQuickPalette NOTIFY darkPaletteChanged)
+    Q_PROPERTY(QQuickPalette* lightPalette READ lightQuickPalette NOTIFY lightPaletteChanged)
 #endif
     Q_PROPERTY(QString deepinDistributionOrgLogo READ deepinDistributionOrgLogo CONSTANT)
     Q_PROPERTY(QString deepinWebsiteName READ deepinWebsiteName CONSTANT)
@@ -193,6 +195,8 @@ public:
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     QQuickPalette *quickPalette() const;
     QQuickPalette *inactiveQuickPalette() const;
+    QQuickPalette *darkQuickPalette() const;
+    QQuickPalette *lightQuickPalette() const;
 #endif
 
     Q_INVOKABLE QColor blendColor(const QColor &substrate, const QColor &superstratum);
@@ -246,6 +250,10 @@ Q_SIGNALS:
     void hasNoTitlebarChanged();
     void paletteChanged();
     void inactivePaletteChanged();
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    void darkPaletteChanged();
+    void lightPaletteChanged();
+#endif
     void themeTypeChanged(DTK_GUI_NAMESPACE::DGuiApplicationHelper::ColorType themeType);
 
 private:

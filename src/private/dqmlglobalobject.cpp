@@ -141,6 +141,8 @@ void DQMLGlobalObjectPrivate::ensurePalette()
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     quickPalette = new QQuickPalette(q_func());
     inactiveQuickPalette = new QQuickPalette(q_func());
+    darkQuickPalette = new QQuickPalette(q_func());
+    lightQuickPalette = new QQuickPalette(q_func());
 #endif
 
     paletteInit = true;
@@ -161,8 +163,12 @@ void DQMLGlobalObjectPrivate::updatePalettes()
         palette.setBrush(QPalette::All, role, palette.brush(QPalette::Active, role));
     }
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    darkPalette = DGuiApplicationHelper::instance()->applicationPalette(DGuiApplicationHelper::DarkType);
+    lightPalette = DGuiApplicationHelper::instance()->applicationPalette(DGuiApplicationHelper::LightType);
     quickPalette->fromQPalette(palette);
     inactiveQuickPalette->fromQPalette(inactivePalette);
+    darkQuickPalette->fromQPalette(darkPalette);
+    lightQuickPalette->fromQPalette(lightPalette);
 #endif
 }
 
@@ -172,6 +178,8 @@ void DQMLGlobalObjectPrivate::_q_onPaletteChanged()
 
     Q_EMIT q_func()->paletteChanged();
     Q_EMIT q_func()->inactivePaletteChanged();
+    Q_EMIT q_func()->darkPaletteChanged();
+    Q_EMIT q_func()->lightPaletteChanged();
 }
 
 void DQMLGlobalObjectPrivate::ensureWebsiteInfo()
@@ -282,6 +290,20 @@ QQuickPalette *DQMLGlobalObject::inactiveQuickPalette() const
     const_cast<DQMLGlobalObjectPrivate*>(d)->ensurePalette();
     return d->inactiveQuickPalette;
 }
+
+QQuickPalette *DQMLGlobalObject::darkQuickPalette() const
+{
+    D_DC(DQMLGlobalObject);
+    const_cast<DQMLGlobalObjectPrivate*>(d)->ensurePalette();
+    return d->darkQuickPalette;
+}
+QQuickPalette *DQMLGlobalObject::lightQuickPalette() const
+{
+    D_DC(DQMLGlobalObject);
+    const_cast<DQMLGlobalObjectPrivate*>(d)->ensurePalette();
+    return d->lightQuickPalette;
+}
+
 #endif
 
 QColor DQMLGlobalObject::blendColor(const QColor &substrate, const QColor &superstratum)

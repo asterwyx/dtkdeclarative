@@ -31,6 +31,10 @@ public:
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     QQuickPalette *quickPalette = nullptr;
     QQuickPalette *inactiveQuickPalette = nullptr;
+    QQuickPalette *darkQuickPalette = nullptr;
+    QQuickPalette *lightQuickPalette = nullptr;
+    QPalette darkPalette;
+    QPalette lightPalette;
 #endif
     QString deepinWebsiteName;
     QString deepinWebsiteLink;
